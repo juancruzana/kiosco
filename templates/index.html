@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Stock</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+<body>
+    <h1>Gestión de Stock</h1>
+
+    <input type="text" id="buscarProducto" placeholder="Buscar producto por nombre" oninput="buscarProducto()">
+    
+    <button onclick="toggleAgregarProducto()">Agregar Producto</button>
+
+    <div class="form-container" id="formContainer">
+        <h2>Nuevo Producto</h2>
+        <input type="text" id="producto" placeholder="Nombre del producto" required>
+        <input type="text" id="categoria" placeholder="Categoría" required>
+        <input type="number" id="cantidad" placeholder="Cantidad" required>
+        <input type="number" id="precio" placeholder="Precio" required>
+        <select id="reabastecer">
+            <option value="No">No</option>
+            <option value="Sí">Sí</option>
+        </select>
+        <button onclick="agregarProducto()">Agregar</button>
+    </div>
+
+    <table id="stockTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Reabastecer</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los productos se agregarán aquí -->
+        </tbody>
+    </table>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
