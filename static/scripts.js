@@ -35,12 +35,12 @@
             return response.json();
         })
         .then(data => {
-            alert(data.message);
+            // alert(data.message);
             // Aquí puedes agregar la lógica para actualizar la tabla
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Hubo un problema al agregar el producto: ' + error.message);
+            // alert('Hubo un problema al agregar el producto: ' + error.message);
         });
 
         // Limpiar los campos del formulario
@@ -50,32 +50,11 @@
         document.getElementById('precio').value = "";
 
         toggleAgregarProducto(); // Ocultar el formulario
+        // Recargar la página para mostrar el nuevo producto
+        location.reload(); // Recarga la página para que los cambios se vean reflejados
+
     }
-    // function agregarProducto() {
-    //     // Obtener datos del formulario
-    //     const producto = document.getElementById('producto').value;
-    //     const categoria = document.getElementById('categoria').value;
-    //     const cantidad = document.getElementById('cantidad').value;
-    //     const precio = document.getElementById('precio').value;
-    
-    //     // Crear una tarjeta para el producto
-    //     const card = `
-    //         <div class="col-md-4 mb-3">
-    //             <div class="card">
-    //                 <div class="card-body">
-    //                     <h5 class="card-title">${producto}</h5>
-    //                     <p class="card-text"><strong>Categoría:</strong> ${categoria}</p>
-    //                     <p class="card-text"><strong>Cantidad:</strong> ${cantidad}</p>
-    //                     <p class="card-text"><strong>Precio:</strong> $${precio}</p>
-    //                     <button class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     `;
-    
-    //     // Agregar la tarjeta al contenedor
-    //     document.getElementById('productosContainer').innerHTML += card;
-    // }
+
     
 
     async function cargarProductos(filtro = '') {
@@ -126,28 +105,28 @@
     }
 
     // Eliminar producto sin tener que comfirmar
-    // function eliminarProducto(boton, idProducto) {
-    //     fetch(`/eliminar_producto/${idProducto}`, {
-    //         method: 'DELETE',
-    //     })
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Error en la solicitud: ' + response.status);
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Aquí puedes eliminar la fila de la tabla o volver a cargar los productos
-    //         const fila = boton.parentElement.parentElement;
-    //         fila.remove();  // Eliminar la fila de la tabla
-    //         // O puedes recargar la tabla completa
-    //         // cargarProductos();
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //         alert('Hubo un problema al eliminar el producto: ' + error.message);
-    //     });
-    // }
+    function eliminarProducto(boton, idProducto) {
+        fetch(`/eliminar_producto/${idProducto}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Aquí puedes eliminar la fila de la tabla o volver a cargar los productos
+            const fila = boton.parentElement.parentElement;
+            fila.remove();  // Eliminar la fila de la tabla
+            // O puedes recargar la tabla completa
+            // cargarProductos();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al eliminar el producto: ' + error.message);
+        });
+    }
 
 
 

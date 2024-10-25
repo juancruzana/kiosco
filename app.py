@@ -34,7 +34,6 @@ def obtener_productos():
 # Ruta para agregar un producto
 @app.route('/agregar_producto', methods=['POST'])
 def agregar_producto():
-    try:
         data = request.get_json()
         nombre = data.get('nombre')
         categoria = data.get('categoria')
@@ -53,10 +52,6 @@ def agregar_producto():
         conn.commit()
         conn.close()
         return jsonify({'message': 'Producto agregado correctamente.'}), 201
-
-    except Exception as e:
-        print(f"Error al agregar producto: {e}")  # Imprimir el error en la consola
-        return jsonify({'error': 'Hubo un problema al agregar el producto.'}), 500
 
 
 
