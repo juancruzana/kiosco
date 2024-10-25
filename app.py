@@ -27,42 +27,49 @@ def obtener_productos():
         productos = conn.execute('SELECT * FROM productos').fetchall()
 
     conn.close()
-
-    productos_list = [[producto['id'], producto['nombre'], producto['categoria'], producto['cantidad'], producto['precio'], producto['reabastecer']] for producto in productos]
+    productos_list = [[producto['id'], producto['nombre'], producto['categoria'], producto['cantidad'], producto['precio']] for producto in productos]
 
     return jsonify(productos_list)
 
 # Ruta para agregar un producto
 @app.route('/agregar_producto', methods=['POST'])
 def agregar_producto():
-    data = request.get_json()
-    nombre = data.get('nombre')
-    categoria = data.get('categoria')
-    cantidad = data.get('cantidad')
-    precio = data.get('precio')
-    reabastecer = data.get('reabastecer')
+    try:
+        data = request.get_json()
+        nombre = data.get('nombre')
+        categoria = data.get('categoria')
+        cantidad = data.get('cantidad')
+        precio = data.get('precio')
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
+        # Validar que no haya campos vacíos
+        if not all([nombre, categoria, cantidad, precio]):
+            return jsonify({'error': 'Todos los campos son obligatorios.'}), 400
 
-    cursor.execute('INSERT INTO productos (nombre, categoria, cantidad, precio, reabastecer) VALUES (?, ?, ?, ?, ?)',
-                   (nombre, categoria, cantidad, precio, reabastecer))
-    data = request.get_json()
-    conn.commit()
-    conn.close()
-    return jsonify({'message': 'Producto agregado correctamente.'}), 201
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute('INSERT INTO productos (nombre, categoria, cantidad, precio) VALUES (?, ?, ?, ?)',
+                       (nombre, categoria, cantidad, precio))
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Producto agregado correctamente.'}), 201
+
+    except Exception as e:
+        print(f"Error al agregar producto: {e}")  # Imprimir el error en la consola
+        return jsonify({'error': 'Hubo un problema al agregar el producto.'}), 500
+
 
 
 
 # Ruta para eliminar un producto
 @app.route('/eliminar_producto/<int:id>', methods=['DELETE'])
 def eliminar_producto(id):
-    conn = get_db_connection()
-    conn.execute('DELETE FROM productos WHERE id = ?', (id,))
-    conn.commit()
-    conn.close()
+        conn = get_db_connection()
+        conn.execute('DELETE FROM productos WHERE id = ?', (id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Producto eliminado correctamente.'}), 200
 
-    return jsonify({'message': 'Producto eliminado correctamente.'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

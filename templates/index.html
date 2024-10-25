@@ -1,47 +1,52 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Stock</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 </head>
 <body>
-    <h1>Gestión de Stock</h1>
+    <div class="container">
+        <h1 class="text-center">Gestión de Stock</h1>
 
-    <input type="text" id="buscarProducto" placeholder="Buscar producto por nombre" oninput="buscarProducto()">
-    
-    <button onclick="toggleAgregarProducto()">Agregar Producto</button>
+        <input type="text" id="buscarProducto" class="form-control" placeholder="Buscar producto por nombre" oninput="buscarProducto()">
+        
+        <button class="btn btn-danger mt-3" onclick="toggleAgregarProducto()">Agregar Producto</button>
 
-    <div class="form-container" id="formContainer">
-        <h2>Nuevo Producto</h2>
-        <input type="text" id="producto" placeholder="Nombre del producto" required>
-        <input type="text" id="categoria" placeholder="Categoría" required>
-        <input type="number" id="cantidad" placeholder="Cantidad" required>
-        <input type="number" id="precio" placeholder="Precio" required>
-        <select id="reabastecer">
-            <option value="No">No</option>
-            <option value="Sí">Sí</option>
-        </select>
-        <button onclick="agregarProducto()">Agregar</button>
+        <div class="form-container" id="formContainer">
+            <h2>Nuevo Producto</h2>
+            <input type="text" id="producto" class="form-control" placeholder="Nombre del producto" required>
+            <input type="text" id="categoria" class="form-control" placeholder="Categoría" required>
+            <input type="number" id="cantidad" class="form-control" placeholder="Cantidad" required>
+            <input type="number" id="precio" class="form-control" placeholder="Precio" required>
+            <button class="btn btn-success mt-2" onclick="agregarProducto()">Agregar</button>
+        </div>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered" id="stockTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los productos se agregarán aquí -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <table id="stockTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Reabastecer</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Los productos se agregarán aquí -->
-        </tbody>
-    </table>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 </html>
